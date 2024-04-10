@@ -1,0 +1,13 @@
+---
+- hosts: ds
+  gather_facts: false
+  #ignore_errors: true
+  tasks:
+    - name: check the date
+      command: date
+      ignore_errors: true
+    - name: check the uptime
+      command: uptime
+
+
+

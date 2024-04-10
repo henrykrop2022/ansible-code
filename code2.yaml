@@ -1,0 +1,44 @@
+---
+  - hosts: all
+    become: yes
+    gather_facts: yes
+    vars: 
+      user_name: henry2024
+      color: red
+    tasks:
+      - name: Install passwd package
+        apt:
+          name: passwd
+          state: present
+        when: ansible_distribution == "Ubuntu"
+        tags:
+          - app1
+      - name: Creat Group 
+        group:
+          name: cloudteam
+          state: present
+        when: ansible_distribution_major_version < "18",
+      - name: Create User
+        user:
+          name: "{{user_name}}"
+          comment: Henry Admin
+          group: cloudteam
+  - hosts: ws
+    become: yes
+    tasks:
+      - name: Install apache
+        apt:
+          name: apache2
+          state: present
+      - name: Start apache
+        service: 
+          name: apache2 
+          state: started 
+          enabled: yes
+        tags:
+            - service
+      - name: Copy Index file
+        copy:
+          src: index.html
+          dest: /var/www/html/index.html
+          mode: '0644'
