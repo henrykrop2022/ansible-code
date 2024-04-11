@@ -1,0 +1,31 @@
+---
+  - hosts: all
+    become: yes
+    gather_facts: false
+    ignore_errors: true
+    tasks:
+      # - name: Download file from a file path
+      #   ansible.builtin.get_url:
+      #       url: wget --username admin --passowrd devops http://198.58.119.40:8081/repository/prof-repo/bioMedical-0.0.6-SNAPSHOT.jar
+      #       dest: /home/ec2-user/ansible-dev
+      - name: Install lxml
+        package:
+          name: python-lxml
+          state: present
+    # - name: Download  artifacts
+    # - maven_artifact:
+    #     group_id: qa
+    #     artifact_id: bioMedical
+    #     repository_url: 'http://198.58.119.40:8081/repository/prof-repo/'
+    #     username: admin
+    #     password: devops
+    #     dest: /tmp/henry.jar
+    - name: Download Artifacts from Nexus
+      get_url:
+        url: "http://198.58.119.40:8081/repository/prof-repo/bioMedical-0.0.6-SNAPSHOT.jar"
+        dest: /temp
+        url_username: admin
+        url_password: devops
+     
+
+    

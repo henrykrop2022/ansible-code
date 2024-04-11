@@ -1,0 +1,11 @@
+---
+  - hosts: all
+    become: yes
+    gather_facts: false
+    ignore_errors: true
+    tasks:
+      - name: Modifying File
+        lineinfile:
+          path: /etc/selinux/csemanage.conf
+          regexp: '^module-store ='
+          line: module-store = false
