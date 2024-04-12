@@ -9,3 +9,4 @@
           path: /etc/selinux/csemanage.conf
           regexp: '^module-store ='
           line: module-store = false
+      # This line is for testing ci/cd
